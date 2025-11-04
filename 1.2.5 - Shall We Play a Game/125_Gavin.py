@@ -17,6 +17,7 @@ e =  trtl.Turtle()
 n =  trtl.Turtle()
 h =  trtl.Turtle()
 difficulty_chosen = False
+chosen = False
 wn = trtl.Screen()
 #---------Shape creation---------------
 ball = trtl.Turtle("circle")
@@ -103,6 +104,36 @@ def swap():
    a.goto(cor2)
    b.goto(cor1)
 
+def chose(index):
+    global chosen
+    if chosen:
+       return
+    if index == 0:
+        chosen = True
+        cups[0].goto(-150, 100)
+        cups[1].goto(0, 100)
+        ball.showturtle()
+        cups[2].goto(150, 100)
+        h.undo()
+        h.write("You're Not Good At This", font=font_setup)
+    elif index == 1:
+        chosen = True
+        cups[0].goto(-150, 100)
+        cups[1].goto(0, 100)
+        ball.showturtle()
+        cups[2].goto(150, 100)
+        h.undo()
+        h.write("You Found It", font=font_setup)
+    elif index == 2:
+        chosen = True
+        cups[0].goto(-150, 100)
+        cups[1].goto(0, 100)
+        ball.showturtle()
+        cups[2].goto(150, 100)
+        h.undo()
+        h.write("Are You Even Trying", font=font_setup)
+    show_play_again()
+
 def game():
   global pos0, pos1, pos2, a, b
   if difficulty_chosen == "Easy":
@@ -129,7 +160,11 @@ def game():
         cups[2].speed(rand.choice(hard))
         a, b = rand.sample(cups, 2)
         swap()
-  show_play_again()
+  pos1 = cups[1].pos()
+  ball.goto(pos1)
+  cups[0].onclick(lambda x, y: chose(0))
+  cups[1].onclick(lambda x, y: chose(1))
+  cups[2].onclick(lambda x, y: chose(2))
 
 
 wn.mainloop()

@@ -4,8 +4,8 @@ import os
 import sys
 
 #---------Screen Setup---------------
-easy = [1,2,3]
-normal = [1,2,3,4,5,6,8,9,10]
+easy = [1,2,3,4]
+normal = [3,4,5,6]
 hard = [0,7,10,999]
 turtle_colors = ["red", "red", "red"]
 turtle_shapes = ["square", "square", "square"]
@@ -20,14 +20,14 @@ difficulty_chosen = False
 wn = trtl.Screen()
 #---------Shape creation---------------
 ball = trtl.Turtle("circle")
-ball.color("blue")
+ball.color("black", "blue")
 ball.penup()
 ball.shapesize(2)
 
 for s in turtle_shapes:
   cup = trtl.Turtle(shape=s)
   new_color = turtle_colors.pop()
-  cup.color(new_color)
+  cup.color("black", new_color)
   cup.penup()
   cup.speed(0)
   cups.append(cup)
@@ -54,13 +54,16 @@ def on_click(x, y):
         return
     if -90 <= x <= 90 and 300 <= y <= 320:
         difficulty_chosen = "Easy"
+        e.undo(); n.undo(); h.undo()
+        h.write("Easy Mode Activated", font=font_setup)
     elif -90 <= x <= 90 and 250 <= y <= 270:
         difficulty_chosen = "Normal"
+        e.undo(); n.undo(); h.undo()
+        h.write("Normal Mode Activated", font=font_setup)
     elif -90 <= x <= 90 and 200 <= y <= 220:
         difficulty_chosen = "Hard"
-    else:
-        return
-    e.undo(); n.undo(); h.undo()
+        e.undo(); n.undo(); h.undo()
+        h.write("Hard Mode Activated", font=font_setup)
     start_game(difficulty_chosen)
 
 wn.onclick(on_click)
@@ -93,25 +96,39 @@ def play_again(x, y):
     elif -90 <= x <= 90 and 250 <= y <= 270:
         exit()
 
+def swap():
+   global a, b
+   cor1 = a.pos()
+   cor2 = b.pos()
+   a.goto(cor2)
+   b.goto(cor1)
+
 def game():
-  global pos0, pos1, pos2
+  global pos0, pos1, pos2, a, b
   if difficulty_chosen == "Easy":
-    for _ in range(5):
+    ball.hideturtle()
+    for _ in range(10):
         cups[0].speed(rand.choice(easy))
         cups[1].speed(rand.choice(easy))
         cups[2].speed(rand.choice(easy))
-        cups[0].goto(pos2)
-        cups[2].goto(pos0)
+        a, b = rand.sample(cups, 2)
+        swap()
   elif difficulty_chosen == "Normal":
+    ball.hideturtle()
     for _ in range(10):
         cups[0].speed(rand.choice(normal))
         cups[1].speed(rand.choice(normal))
         cups[2].speed(rand.choice(normal))
+        a, b = rand.sample(cups, 2)
+        swap()
   elif difficulty_chosen == "Hard":
+    ball.hideturtle()
     for _ in range(20):
         cups[0].speed(rand.choice(hard))
         cups[1].speed(rand.choice(hard))
         cups[2].speed(rand.choice(hard))
+        a, b = rand.sample(cups, 2)
+        swap()
   show_play_again()
 
 

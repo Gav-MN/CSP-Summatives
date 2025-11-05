@@ -65,6 +65,8 @@ def on_click(x, y):
         difficulty_chosen = "Hard"
         e.undo(); n.undo(); h.undo()
         h.write("Hard Mode Activated", font=font_setup)
+    else:
+       on_click()
     start_game(difficulty_chosen)
 
 wn.onclick(on_click)

@@ -18,6 +18,8 @@ n =  trtl.Turtle()
 h =  trtl.Turtle()
 difficulty_chosen = False
 chosen = False
+max_chars = 7
+name = trtl.textinput("Name", "Enter your name (max " + str(max_chars) + " chars):")
 wn = trtl.Screen()
 #---------Shape creation---------------
 ball = trtl.Turtle("circle")
@@ -107,7 +109,7 @@ def swap():
    b.goto(cor1)
 
 def chose(index):
-    global chosen
+    global chosen, name
     if chosen:
        return
     if index == 0:
@@ -117,7 +119,7 @@ def chose(index):
         ball.showturtle()
         cups[2].goto(150, 100)
         h.undo()
-        h.write("You're Not Good At This", font=font_setup)
+        h.write(f"You're Not Good At This, Are You {name}", font=font_setup)
     elif index == 1:
         chosen = True
         cups[0].goto(-150, 100)
@@ -125,7 +127,7 @@ def chose(index):
         ball.showturtle()
         cups[2].goto(150, 100)
         h.undo()
-        h.write("You Found It", font=font_setup)
+        h.write(f"Congradulations {name}, You Found It", font=font_setup)
     elif index == 2:
         chosen = True
         cups[0].goto(-150, 100)
@@ -133,7 +135,7 @@ def chose(index):
         ball.showturtle()
         cups[2].goto(150, 100)
         h.undo()
-        h.write("Are You Even Trying", font=font_setup)
+        h.write(f"Are You Even Trying {name}", font=font_setup)
     show_play_again()
 
 def game():
